@@ -61,7 +61,7 @@ sessions 1
 
 This exploit gave me a Meterpreter session, a powerful interactive shell that goes beyond basic command execution. Meterpreter provides built-in commands for things like file transfers, webcam access, microphone capture, and installing backdoors.
 
-Since I was in a Meterpreter session, standard Linux commands like `whoami` returned an `unknown command` error. Instead, I used Meterpreter's `getuid` command to check my current user and `ysinfo` to view system information. The `getuid` output showed that I had root privileges in this session.
+Since I was in a Meterpreter session, standard Linux commands like `whoami` returned an `unknown command` error. Instead, I used Meterpreter's `getuid` command to check my current user and `sysinfo` to view system information. The `getuid` output showed that I had root privileges in this session.
 
 ![description](screenshots/screenshot-4.png)
 
@@ -97,4 +97,4 @@ I also tried to read `/etc/shadow` from the PostgreSQL session. The regular shel
 
 **5. Reflection**
 
-This exercise showed me that even a single unpatched service can give an attacker significant access to a system. The vsftpd backdoor granted full root access, while the PostgreSQL exploit demonstrated how default credentials can be just as dangerous. The difference in privilege levels between the two sessions also reminded me that getting a shell is just the beginning, understanding what you can do with that access is equally important.
+This exercise showed me that even a single unpatched service can give an attacker significant access to a system. The vsftpd backdoor granted full root access, while the PostgreSQL exploit showed me that a vulnerable service can provide access to a system, but the level of access may be limited. The difference in privileges between the two sessions also reminded me that getting a shell is just the beginning. Understanding what you can do with that access is equally important.
