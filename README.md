@@ -61,7 +61,7 @@ sessions 1
 
 This exploit gave me a Meterpreter session, a powerful interactive shell that goes beyond basic command execution. Meterpreter provides built-in commands for things like file transfers, webcam access, microphone capture, and installing backdoors.
 
-Since I was in a Meterpreter session, running standard Linux commands like `whoami` directly returned an 'unknown command' error. Instead, I used Meterpreter's native `getuid` and `sysinfo` commands to verify my root privileges and system details.
+Since I was in a Meterpreter session, standard Linux commands like `whoami` returned an `unknown command` error. Instead, I used Meterpreter's `getuid` command to check my current user and `ysinfo` to view system information. The `getuid` output showed that I had root privileges in this session.
 
 ![description](screenshots/screenshot-4.png)
 
@@ -91,9 +91,9 @@ I got another Meterpreter session. I ran `getuid`, `sysinfo`, and `ls` to check 
 
 With root access from the vsftpd session, I explored the file system and confirmed I could read, modify, or delete files, which demonstrated the level of damage a real attacker could cause with this level of access.
 
-In the PostgreSQL session, I ran `ls` and noticed several files related to server and root certificates. Although I was running as `postgres` and not root, access to these certificates could still allow an attacker to decrypt network traffic or conduct further attacks.
+In the PostgreSQL session, I ran `ls` and noticed several files related to server and root certificates. This caught my attention because certificates and their associated private keys can play an important role in secure communications. However, I did not verify whether these files contained sensitive information or could be used in further attacks.
 
-I also attempted to read `/etc/shadow` from the PostgreSQL session, but the regular shell returned `Permission denied`. This confirmed that gaining a shell does not always mean having root privileges.
+I also tried to read `/etc/shadow` from the PostgreSQL session. The regular shell returned `Permission denied`, while the command did not work directly in Meterpreter. After checking `getuid`, I confirmed that the session was running as `postgres`, not root. This showed me that gaining a shell does not automatically grant root privileges.
 
 **5. Reflection**
 
